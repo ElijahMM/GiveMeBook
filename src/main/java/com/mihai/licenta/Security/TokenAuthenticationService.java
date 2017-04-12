@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class TokenAuthenticationService {
 
-    static final long EXPIRATION_TIME = 10000000;
+    static final long EXPIRATION_TIME = 10000000; // ms
     static final String SECRET = "Licenta";
     static final String TOKEN_PREFIX = "Mihai";
     static final String HEADER_STRING = "Authorization";
@@ -32,6 +32,7 @@ public class TokenAuthenticationService {
                 .compact();
         response.setContentType("application/json");
 
+        //TODO: store jwt into database
     }
 
 

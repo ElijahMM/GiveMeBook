@@ -1,7 +1,10 @@
 package com.mihai.licenta.Security;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mihai.licenta.Models.InternModels.LoginUser;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -12,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * Created by mihai on 30.03.2017.
@@ -26,17 +30,16 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-//        LoginUser creds = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
-//        System.out.println(creds.getUsername() +" " + creds.getPassword());
-//        System.out.println(request);
-//        UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(
-//                creds.getUsername(),
-//                creds.getPassword(),
-//                Collections.emptyList()
-//        );
-//        CustomAuthenticationManager customAuthenticationManager = new CustomAuthenticationManager();
-//        return customAuthenticationManager.authenticate(a);
-        return null;
+        LoginUser creds = new ObjectMapper().readValue(request.getInputStream(), LoginUser.class);
+        System.out.println(creds.getUsername() + " " + creds.getPassword());
+        System.out.println(request);
+        UsernamePasswordAuthenticationToken a = new UsernamePasswordAuthenticationToken(
+                creds.getUsername(),
+                creds.getPassword(),
+                Collections.emptyList()
+        );
+        CustomAuthenticationManager customAuthenticationManager = new CustomAuthenticationManager();
+        return customAuthenticationManager.authenticate(a);
     }
 
     @Override
