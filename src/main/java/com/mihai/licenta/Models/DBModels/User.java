@@ -141,4 +141,52 @@ public class User {
     public void setFbID(String fbID) {
         this.fbID = fbID;
     }
+
+    public List<Preferences> getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(List<Preferences> preferences) {
+        this.preferences = preferences;
+    }
+
+    public List<Settings> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(List<Settings> settings) {
+        this.settings = settings;
+    }
+
+    public List<Interactions> getInteractions() {
+        return interactions;
+    }
+
+    public void setInteractions(List<Interactions> interactions) {
+        this.interactions = interactions;
+    }
+
+    public List<Friends> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<Friends> friends) {
+        this.friends = friends;
+    }
+
+    public List<Recommendations> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<Recommendations> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public List<BookState> getBookStates() {
+        return bookStates;
+    }
+
+    public void setBookStates(List<BookState> bookStates) {
+        this.bookStates = bookStates;
+    }
 }
