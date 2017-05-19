@@ -19,9 +19,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/user/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/user/uploadPhoto").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/resource/image/user/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/user/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
                 .anyRequest().authenticated()
                 .and()

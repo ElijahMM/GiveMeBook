@@ -3,7 +3,7 @@ package com.mihai.licenta;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 @SpringBootApplication
 public class GmbApplication {
@@ -13,8 +13,7 @@ public class GmbApplication {
 	}
 
 	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		return bCryptPasswordEncoder;
+	public Md5PasswordEncoder passwordEncoder() {
+		return new Md5PasswordEncoder();
 	}
 }

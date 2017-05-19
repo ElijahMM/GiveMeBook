@@ -1,10 +1,10 @@
 package com.mihai.licenta.Controllers;
 
 import com.mihai.licenta.Models.DBModels.Preferences;
+import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 import com.mihai.licenta.Service.UserService;
 import com.mihai.licenta.Utils.Urls;
-import com.sun.istack.internal.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +42,7 @@ public class UserController {
                 user.setUsername(username);
                 user.setEmail(email);
                 user.setPassword(password);
-                Long id = userService.saveUser(user).getUid();
+                Long id = userService.saveUser(user, 0).getUid();
 
                 try {
                     if (file != null) {
@@ -69,18 +69,21 @@ public class UserController {
 
     @RequestMapping(value = "/updatePreferences/{id}", method = RequestMethod.POST)
     public ResponseEntity updatePreferences(@RequestBody List<Preferences> preferences, @PathVariable("id") Long uid) {
-        User user = userService.findUserById(uid);
-        if (user != null) {
-            for (Preferences p : preferences) {
-                p.setUser(user);
-                user.getPreferences().add(p);
-                userService.saveUser(user);
-            }
+        if (userService.updatePreferences(preferences, uid)) {
             return ResponseEntity.status(HttpStatus.OK).body("Success");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with such id");
         }
 
     }
+
+    @RequestMapping(value = "/updateSettings/{id}", method = RequestMethod.POST)
+    public ResponseEntity updateSettings(@RequestBody Settings settings, @PathVariable("id") Long uid) {
+        if (userService.updateSettings(settings, uid)) {
+            return ResponseEntity.status(HttpStatus.OK).body("Success");
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with such id");
+    }
+
 
 }

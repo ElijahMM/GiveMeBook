@@ -1,6 +1,10 @@
 package com.mihai.licenta.Service;
 
+import com.mihai.licenta.Models.DBModels.Preferences;
+import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
+
+import java.util.List;
 
 /**
  * Created by mihai on 16.05.2017.
@@ -13,8 +17,14 @@ public interface UserService {
 
     User findUserByUsername(String username);
 
-    User saveUser(User user);
+    User saveUser(User user, Integer createOrUpdate);
 
     int updateUserPhoto(String url, Long userId);
+
+    User loginUser(String email, String password);
+
+    Boolean updatePreferences(List<Preferences> prefs, Long uid);
+
+    Boolean updateSettings(Settings settings, Long id);
 
 }

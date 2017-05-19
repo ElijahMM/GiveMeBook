@@ -1,5 +1,8 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Interactions {
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long iId;
@@ -18,7 +22,9 @@ public class Interactions {
     @Column
     Integer refId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     User user;
 }

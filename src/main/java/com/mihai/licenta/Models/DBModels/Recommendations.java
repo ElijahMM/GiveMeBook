@@ -13,7 +13,7 @@ public class Recommendations {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long rid;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     User user;
 

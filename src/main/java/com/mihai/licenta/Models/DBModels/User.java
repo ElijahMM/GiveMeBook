@@ -1,8 +1,11 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mihai on 12.05.2017.
@@ -19,6 +22,7 @@ public class User {
     @Column
     String username;
 
+    @JsonIgnore
     @Column
     String password;
 
@@ -43,23 +47,29 @@ public class User {
     @Column
     String fbID;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<Preferences> preferences;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<Preferences> preferences;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<Settings> settings;
+    @JsonManagedReference
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Settings settings;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<Interactions> interactions;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<Interactions> interactions;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<Friends> friends;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<Friends> friends;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<Recommendations> recommendations;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<Recommendations> recommendations;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-    List<BookState> bookStates;
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    Set<BookState> bookStates;
 
 
     public Long getUid() {
@@ -142,51 +152,51 @@ public class User {
         this.fbID = fbID;
     }
 
-    public List<Preferences> getPreferences() {
+    public Set<Preferences> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(List<Preferences> preferences) {
+    public void setPreferences(Set<Preferences> preferences) {
         this.preferences = preferences;
     }
 
-    public List<Settings> getSettings() {
+    public Settings getSettings() {
         return settings;
     }
 
-    public void setSettings(List<Settings> settings) {
+    public void setSettings(Settings settings) {
         this.settings = settings;
     }
 
-    public List<Interactions> getInteractions() {
+    public Set<Interactions> getInteractions() {
         return interactions;
     }
 
-    public void setInteractions(List<Interactions> interactions) {
+    public void setInteractions(Set<Interactions> interactions) {
         this.interactions = interactions;
     }
 
-    public List<Friends> getFriends() {
+    public Set<Friends> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<Friends> friends) {
+    public void setFriends(Set<Friends> friends) {
         this.friends = friends;
     }
 
-    public List<Recommendations> getRecommendations() {
+    public Set<Recommendations> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(List<Recommendations> recommendations) {
+    public void setRecommendations(Set<Recommendations> recommendations) {
         this.recommendations = recommendations;
     }
 
-    public List<BookState> getBookStates() {
+    public Set<BookState> getBookStates() {
         return bookStates;
     }
 
-    public void setBookStates(List<BookState> bookStates) {
+    public void setBookStates(Set<BookState> bookStates) {
         this.bookStates = bookStates;
     }
 }
