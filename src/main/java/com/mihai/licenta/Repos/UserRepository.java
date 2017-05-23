@@ -1,5 +1,6 @@
 package com.mihai.licenta.Repos;
 
+import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,6 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByUsername(String username);
 
     User findUserByEmailAndPassword(String email, String password);
+
 
     @Modifying
     @Transactional

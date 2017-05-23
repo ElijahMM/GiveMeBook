@@ -1,6 +1,6 @@
 package com.mihai.licenta.Service;
 
-import com.mihai.licenta.Models.DBModels.Preferences;
+import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 
@@ -23,7 +23,7 @@ public interface UserService {
 
     User loginUser(String email, String password);
 
-    Boolean updatePreferences(List<Preferences> prefs, Long uid);
+    Boolean updatePreferences(List<UserPreferences> prefs, Long uid);
 
     Boolean updateSettings(Settings settings, Long id);
 

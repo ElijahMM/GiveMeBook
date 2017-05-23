@@ -17,59 +17,59 @@ public class User {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long uid;
+    private Long uid;
 
     @Column
-    String username;
+    private String username;
 
     @JsonIgnore
     @Column
-    String password;
+    private String password;
 
     @Column
-    String email;
+    private String email;
 
     @Column
-    Integer type;
+    private Integer type;
 
     @Column
-    String photoUrl;
+    private String photoUrl;
 
     @Column
-    String token;
+    private String token;
 
     @Column
-    Date createdAt;
+    private Date createdAt;
 
     @Column
-    Date updatedAt;
+    private Date updatedAt;
 
     @Column
-    String fbID;
+    private String fbID;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Set<Preferences> preferences;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Set<UserPreferences> preferences;
 
     @JsonManagedReference
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Settings settings;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Settings settings;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Set<Interactions> interactions;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Set<Interactions> interactions;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Set<Friends> friends;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Set<Friends> friends;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Set<Recommendations> recommendations;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Set<Recommendations> recommendations;
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
-    Set<BookState> bookStates;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
+    private Set<BookState> bookStates;
 
 
     public Long getUid() {
@@ -152,11 +152,11 @@ public class User {
         this.fbID = fbID;
     }
 
-    public Set<Preferences> getPreferences() {
+    public Set<UserPreferences> getPreferences() {
         return preferences;
     }
 
-    public void setPreferences(Set<Preferences> preferences) {
+    public void setPreferences(Set<UserPreferences> preferences) {
         this.preferences = preferences;
     }
 

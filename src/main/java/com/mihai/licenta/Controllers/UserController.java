@@ -1,6 +1,6 @@
 package com.mihai.licenta.Controllers;
 
-import com.mihai.licenta.Models.DBModels.Preferences;
+import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 import com.mihai.licenta.Service.UserService;
@@ -68,13 +68,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/updatePreferences/{id}", method = RequestMethod.POST)
-    public ResponseEntity updatePreferences(@RequestBody List<Preferences> preferences, @PathVariable("id") Long uid) {
+    public ResponseEntity updatePreferences(@RequestBody List<UserPreferences> preferences, @PathVariable("id") Long uid) {
         if (userService.updatePreferences(preferences, uid)) {
             return ResponseEntity.status(HttpStatus.OK).body("Success");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with such id");
         }
-
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No user with such id");
     }
 
     @RequestMapping(value = "/updateSettings/{id}", method = RequestMethod.POST)

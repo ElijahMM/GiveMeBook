@@ -7,30 +7,99 @@ import java.util.List;
  * Created by mihai on 12.05.2017.
  */
 @Entity
+@Table(name = "BOOKS")
 public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long bId;
+    private Long bId;
 
     @Column
-    String name;
+    private String name;
 
     @Column
-    String title;
+    private String title;
 
     @Column
-    String author;
+    private String author;
+
+    @Column
+    private String description;
 
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    List<Categories> categories;
+    private List<Categories> categories;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    List<Recommendations> recommendations;
+    private List<Recommendations> recommendations;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    List<BookState> bookStates;
+    private List<BookState> bookStates;
+
+
+    public Long getbId() {
+        return bId;
+    }
+
+    public void setbId(Long bId) {
+        this.bId = bId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<Categories> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Categories> categories) {
+        this.categories = categories;
+    }
+
+    public List<Recommendations> getRecommendations() {
+        return recommendations;
+    }
+
+    public void setRecommendations(List<Recommendations> recommendations) {
+        this.recommendations = recommendations;
+    }
+
+    public List<BookState> getBookStates() {
+        return bookStates;
+    }
+
+    public void setBookStates(List<BookState> bookStates) {
+        this.bookStates = bookStates;
+    }
 
 }
 

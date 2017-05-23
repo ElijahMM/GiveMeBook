@@ -2,6 +2,7 @@ package com.mihai.licenta.Models.DBModels;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
@@ -9,24 +10,25 @@ import javax.persistence.*;
  * Created by mihai on 12.05.2017.
  */
 @Entity
+@Table(name = "SETTINGS")
 public class Settings {
 
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long sid;
+    private Long sid;
 
 
     @Column
-    Boolean emailNotiffication;
+    private Boolean emailNotification;
 
     @Column
-    Boolean pushNotiffication;
+    private Boolean pushNotification;
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     public Long getSid() {
         return sid;
@@ -36,20 +38,20 @@ public class Settings {
         this.sid = sid;
     }
 
-    public Boolean getEmailNotiffication() {
-        return emailNotiffication;
+    public Boolean getEmailNotification() {
+        return emailNotification;
     }
 
-    public void setEmailNotiffication(Boolean emailNotiffication) {
-        this.emailNotiffication = emailNotiffication;
+    public void setEmailNotification(Boolean emailNotification) {
+        this.emailNotification = emailNotification;
     }
 
-    public Boolean getPushNotiffication() {
-        return pushNotiffication;
+    public Boolean getPushNotification() {
+        return pushNotification;
     }
 
-    public void setPushNotiffication(Boolean pushNotiffication) {
-        this.pushNotiffication = pushNotiffication;
+    public void setPushNotification(Boolean pushNotification) {
+        this.pushNotification = pushNotification;
     }
 
     public User getUser() {

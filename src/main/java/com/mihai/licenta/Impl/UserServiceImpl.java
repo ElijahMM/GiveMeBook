@@ -1,6 +1,6 @@
 package com.mihai.licenta.Impl;
 
-import com.mihai.licenta.Models.DBModels.Preferences;
+import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 import com.mihai.licenta.Repos.UserRepository;
@@ -11,6 +11,9 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 
 /**
@@ -54,14 +57,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean updatePreferences(List<Preferences> prefs, Long uid) {
+    public Boolean updatePreferences(List<UserPreferences> prefs, Long uid) {
         User user = findUserById(uid);
         if (user != null) {
-            for (Preferences p : prefs) {
+            Set<UserPreferences> newPreferenceList = prefs.stream().filter(n -> !user.getPreferences().contains(n)).collect(Collectors.toSet());
+            user.getPreferences().clear();
+            for (UserPreferences p : newPreferenceList) {
                 p.setUser(user);
                 user.getPreferences().add(p);
-                saveUser(user, 1);
             }
+            saveUser(user, 1);
             return true;
         }
         return false;
@@ -71,6 +76,8 @@ public class UserServiceImpl implements UserService {
     public Boolean updateSettings(Settings settings, Long id) {
         User user = findUserById(id);
         if (user != null) {
+            settings.setSid(user.getSettings().getSid());
+            settings.setUser(user);
             user.setSettings(settings);
             saveUser(user, 1);
             return true;
@@ -88,8 +95,8 @@ public class UserServiceImpl implements UserService {
             user.setUpdatedAt(Util.getSqlDate());
 
             Settings u_setting = new Settings();
-            u_setting.setEmailNotiffication(false);
-            u_setting.setPushNotiffication(false);
+            u_setting.setEmailNotification(false);
+            u_setting.setPushNotification(false);
             u_setting.setUser(user);
             user.setSettings(u_setting);
 
@@ -103,6 +110,5 @@ public class UserServiceImpl implements UserService {
     public int updateUserPhoto(String url, Long userId) {
         return userRepository.updateUserPhoto(url, userId);
     }
-
 
 }
