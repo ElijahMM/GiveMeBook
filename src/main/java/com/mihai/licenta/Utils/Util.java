@@ -1,6 +1,7 @@
 package com.mihai.licenta.Utils;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 /**
  * Created by mihai on 16.05.2017.
@@ -8,7 +9,6 @@ import java.sql.Date;
 public class Util {
 
     public static Date getSqlDate() {
-        java.util.Date date = new java.util.Date();
-        return new Date(date.getTime());
+        return new Date(Calendar.getInstance().getTimeInMillis());
     }
 }

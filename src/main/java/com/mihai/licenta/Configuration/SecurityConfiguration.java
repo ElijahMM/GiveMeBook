@@ -21,6 +21,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/user/register").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/login").permitAll()
+                .antMatchers("/api/resource/image/user/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterAfter(new JWTLoginFilter("/api/user/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class)

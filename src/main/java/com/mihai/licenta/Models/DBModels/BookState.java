@@ -22,7 +22,7 @@ public class BookState {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    private Books book;
+    private Book book;
 
 
     public Long getBsId() {
@@ -49,11 +49,11 @@ public class BookState {
         this.user = user;
     }
 
-    public Books getBook() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBook(Books book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 }

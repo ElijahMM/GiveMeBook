@@ -5,14 +5,19 @@ import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
 import com.mihai.licenta.Repos.UserRepository;
 import com.mihai.licenta.Service.UserService;
+import com.mihai.licenta.Utils.Urls;
 import com.mihai.licenta.Utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 
@@ -28,6 +33,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private Md5PasswordEncoder passwordEncoder;
 
+    private static String UPLOADED_FOLDER = "/home/mihai/Documents/Licenta/Server/Resources/Images/User/";
 
     @Override
     public User findUserByEmail(String email) {
@@ -54,6 +60,32 @@ public class UserServiceImpl implements UserService {
             }
         }
         return null;
+    }
+
+    @Override
+    public Boolean registerUser(User user, MultipartFile file) {
+
+        if ((findUserByEmail(user.getEmail())) == null) {
+            if ((findUserByUsername(user.getUsername()) == null)) {
+                Long id = this.saveUser(user, 0).getUid();
+                try {
+                    if (file != null) {
+                        byte[] bytes = file.getBytes();
+                        Path path = Paths.get(UPLOADED_FOLDER + id + "");
+                        Files.write(path, bytes);
+
+                        String url = Urls.BASE_URL + Urls.GET_PHOTO_URL + id;
+
+                        setUpUserPhotoUrl(url, id);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override
@@ -85,6 +117,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
+
     @Override
     public User saveUser(User user, Integer createOrUpdate) {
         if (createOrUpdate == 0) {
@@ -107,8 +140,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updateUserPhoto(String url, Long userId) {
-        return userRepository.updateUserPhoto(url, userId);
+    public Boolean updateUserPhoto(Long uid, MultipartFile file) {
+        User user = findUserById(uid);
+        if (user != null) {
+            try {
+                if (file != null) {
+                    byte[] bytes = file.getBytes();
+                    Path path = Paths.get(UPLOADED_FOLDER + user.getUid() + "");
+                    Files.write(path, bytes);
+
+                    String url = Urls.BASE_URL + Urls.GET_PHOTO_URL + user.getUid();
+
+                    setUpUserPhotoUrl(url, user.getUid());
+                } else {
+                    return false;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public int setUpUserPhotoUrl(String url, Long userId) {
+        return userRepository.updateUserPhotoUrl(url, userId);
     }
 
 }

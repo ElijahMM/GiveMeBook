@@ -8,7 +8,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "BOOKS")
-public class Books {
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +26,8 @@ public class Books {
     @Column
     private String description;
 
+    @Column
+    private String cover_photo;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
     private List<Categories> categories;
@@ -101,5 +103,12 @@ public class Books {
         this.bookStates = bookStates;
     }
 
+    public String getCover_photo() {
+        return cover_photo;
+    }
+
+    public void setCover_photo(String cover_photo) {
+        this.cover_photo = cover_photo;
+    }
 }
 

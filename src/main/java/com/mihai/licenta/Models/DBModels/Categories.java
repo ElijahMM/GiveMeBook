@@ -20,7 +20,7 @@ public class Categories {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    private Books book;
+    private Book book;
 
 
     public Long getCid() {
@@ -39,11 +39,11 @@ public class Categories {
         this.name = name;
     }
 
-    public Books getBook() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBook(Books book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 }

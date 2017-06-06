@@ -3,7 +3,10 @@ package com.mihai.licenta.Service;
 import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -19,12 +22,15 @@ public interface UserService {
 
     User saveUser(User user, Integer createOrUpdate);
 
-    int updateUserPhoto(String url, Long userId);
+    int setUpUserPhotoUrl(String url, Long userId);
 
     User loginUser(String email, String password);
+
+    Boolean registerUser(User user, MultipartFile file);
 
     Boolean updatePreferences(List<UserPreferences> prefs, Long uid);
 
     Boolean updateSettings(Settings settings, Long id);
 
+    Boolean updateUserPhoto(Long uid,MultipartFile file);
 }
