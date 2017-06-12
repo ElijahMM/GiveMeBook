@@ -3,6 +3,7 @@ package com.mihai.licenta.Controllers;
 import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
+import com.mihai.licenta.Models.InternModels.StringResonse;
 import com.mihai.licenta.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,14 @@ public class UserController {
         return ResponseEntity.badRequest().body("User already register");
     }
 
+    @RequestMapping(value = "/logout/{id}", method = RequestMethod.POST)
+    public ResponseEntity logoutUser(@PathVariable("id") Long uid) {
+        if (userService.removeUserToken(uid)) {
+            return ResponseEntity.ok().body(new StringResonse("Success"));
+        }
+        return ResponseEntity.badRequest().body(new StringResonse("Invalid User"));
+    }
+
     @RequestMapping(value = "/updatePreferences/{id}", method = RequestMethod.POST)
     public ResponseEntity updatePreferences(@RequestBody List<UserPreferences> preferences, @PathVariable("id") Long uid) {
         if (userService.updatePreferences(preferences, uid)) {
@@ -48,9 +57,9 @@ public class UserController {
     @RequestMapping(value = "/updateSettings/{id}", method = RequestMethod.POST)
     public ResponseEntity updateSettings(@RequestBody Settings settings, @PathVariable("id") Long uid) {
         if (userService.updateSettings(settings, uid)) {
-            return ResponseEntity.status(HttpStatus.OK).body("Success");
+            return ResponseEntity.status(HttpStatus.OK).body(new StringResonse("Success"));
         }
-        return ResponseEntity.badRequest().body("No user with such id");
+        return ResponseEntity.badRequest().body(new StringResonse("No user with such id"));
     }
 
 

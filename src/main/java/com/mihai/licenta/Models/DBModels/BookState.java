@@ -1,5 +1,7 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -20,6 +22,7 @@ public class BookState {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;

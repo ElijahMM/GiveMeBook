@@ -33,4 +33,6 @@ public interface UserService {
     Boolean updateSettings(Settings settings, Long id);
 
     Boolean updateUserPhoto(Long uid,MultipartFile file);
+
+    Boolean removeUserToken(Long uid);
 }

@@ -47,6 +47,7 @@ public class User {
     @Column
     private String fbID;
 
+
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Set<UserPreferences> preferences;

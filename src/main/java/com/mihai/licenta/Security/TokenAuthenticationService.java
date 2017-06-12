@@ -59,7 +59,7 @@ public class TokenAuthenticationService {
                     .getBody()
                     .getSubject();
 
-            return user != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) : null;
+            return userService.findUserByEmail(user).getToken() != null ? new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList()) : null;
         }
         return null;
     }

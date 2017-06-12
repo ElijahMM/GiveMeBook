@@ -1,5 +1,7 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -14,11 +16,13 @@ public class Recommendations {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long rid;
 
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 

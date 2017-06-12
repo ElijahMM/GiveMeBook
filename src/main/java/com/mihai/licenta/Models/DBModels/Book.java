@@ -1,7 +1,10 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by mihai on 12.05.2017.
@@ -14,8 +17,6 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bId;
 
-    @Column
-    private String name;
 
     @Column
     private String title;
@@ -29,15 +30,21 @@ public class Book {
     @Column
     private String cover_photo;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    private List<Categories> categories;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
+    private Set<Categories> categories;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    private List<Recommendations> recommendations;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
+    private Set<Recommendations> recommendations;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "book")
-    private List<BookState> bookStates;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
+    private Set<BookState> bookStates;
 
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
+    private Set<BookReview> bookReviews;
 
     public Long getbId() {
         return bId;
@@ -45,14 +52,6 @@ public class Book {
 
     public void setbId(Long bId) {
         this.bId = bId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTitle() {
@@ -79,28 +78,36 @@ public class Book {
         this.description = description;
     }
 
-    public List<Categories> getCategories() {
+    public Set<Categories> getCategories() {
         return categories;
     }
 
-    public void setCategories(List<Categories> categories) {
+    public void setCategories(Set<Categories> categories) {
         this.categories = categories;
     }
 
-    public List<Recommendations> getRecommendations() {
+    public Set<Recommendations> getRecommendations() {
         return recommendations;
     }
 
-    public void setRecommendations(List<Recommendations> recommendations) {
+    public void setRecommendations(Set<Recommendations> recommendations) {
         this.recommendations = recommendations;
     }
 
-    public List<BookState> getBookStates() {
+    public Set<BookState> getBookStates() {
         return bookStates;
     }
 
-    public void setBookStates(List<BookState> bookStates) {
+    public void setBookStates(Set<BookState> bookStates) {
         this.bookStates = bookStates;
+    }
+
+    public Set<BookReview> getBookReviews() {
+        return bookReviews;
+    }
+
+    public void setBookReviews(Set<BookReview> bookReviews) {
+        this.bookReviews = bookReviews;
     }
 
     public String getCover_photo() {

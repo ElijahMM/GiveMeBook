@@ -20,6 +20,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByEmailAndPassword(String email, String password);
 
+    @Modifying
+    @Transactional
+    @Query(nativeQuery = true, value = "UPDATE  user u SET u.token=null WHERE u.uid =:userID")
+    void removerToken(@Param("userID") Long userID);
+
 
     @Modifying
     @Transactional

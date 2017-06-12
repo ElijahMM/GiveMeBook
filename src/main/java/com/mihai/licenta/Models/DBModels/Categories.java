@@ -1,5 +1,7 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 /**
@@ -18,6 +20,7 @@ public class Categories {
     @Column
     private String name;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;

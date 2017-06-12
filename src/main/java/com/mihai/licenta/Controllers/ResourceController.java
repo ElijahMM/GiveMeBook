@@ -25,7 +25,7 @@ public class ResourceController {
 
 
     @RequestMapping(value = "/image/user/{id}", method = RequestMethod.GET)
-    public void getUserImage(@PathVariable("id") Long id, HttpServletResponse response) throws IOException {
+    public void getUserImage(@PathVariable("id") String id, HttpServletResponse response) throws IOException {
         Path path = Paths.get(UPLOADED_FOLDER + id + "");
         InputStream in = new FileInputStream(path.toString());
         response.setContentType(MediaType.IMAGE_JPEG_VALUE);

@@ -1,5 +1,6 @@
 package com.mihai.licenta.Impl;
 
+import com.mihai.licenta.Models.DBModels.Book;
 import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
@@ -68,16 +69,17 @@ public class UserServiceImpl implements UserService {
         if ((findUserByEmail(user.getEmail())) == null) {
             if ((findUserByUsername(user.getUsername()) == null)) {
                 Long id = this.saveUser(user, 0).getUid();
+                String url;
                 try {
                     if (file != null) {
                         byte[] bytes = file.getBytes();
                         Path path = Paths.get(UPLOADED_FOLDER + id + "");
                         Files.write(path, bytes);
-
-                        String url = Urls.BASE_URL + Urls.GET_PHOTO_URL + id;
-
-                        setUpUserPhotoUrl(url, id);
+                        url = Urls.BASE_URL + Urls.GET_PHOTO_URL + id;
+                    } else {
+                        url = Urls.BASE_URL + Urls.GET_PHOTO_URL + "def_img";
                     }
+                    setUpUserPhotoUrl(url, id);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -158,6 +160,15 @@ public class UserServiceImpl implements UserService {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean removeUserToken(Long uid) {
+        if (userRepository.findOne(uid) != null) {
+            userRepository.removerToken(uid);
             return true;
         }
         return false;
