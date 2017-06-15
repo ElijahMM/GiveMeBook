@@ -1,8 +1,11 @@
 package com.mihai.licenta.Service;
 
+import com.mihai.licenta.Models.DBModels.Interactions;
 import com.mihai.licenta.Models.DBModels.UserPreferences;
 import com.mihai.licenta.Models.DBModels.Settings;
 import com.mihai.licenta.Models.DBModels.User;
+import com.mihai.licenta.Models.InternModels.InteractionIncoming;
+import com.mihai.licenta.Models.InternModels.SharedUser;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +35,12 @@ public interface UserService {
 
     Boolean updateSettings(Settings settings, Long id);
 
-    Boolean updateUserPhoto(Long uid,MultipartFile file);
+    Boolean updateUserPhoto(Long uid, MultipartFile file);
 
     Boolean removeUserToken(Long uid);
+
+    SharedUser getUserById(Long uid);
+
+    Boolean addFriendToUser(InteractionIncoming interactionIncoming);
+
 }

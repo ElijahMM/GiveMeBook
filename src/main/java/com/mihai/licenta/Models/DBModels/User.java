@@ -60,14 +60,11 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Set<Interactions> interactions;
 
-    @JsonManagedReference
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
-    private Set<Friends> friends;
-
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Set<Recommendations> recommendations;
 
+    @JsonManagedReference
     @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private Set<BookState> bookStates;
@@ -175,14 +172,6 @@ public class User {
 
     public void setInteractions(Set<Interactions> interactions) {
         this.interactions = interactions;
-    }
-
-    public Set<Friends> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<Friends> friends) {
-        this.friends = friends;
     }
 
     public Set<Recommendations> getRecommendations() {

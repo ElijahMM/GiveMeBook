@@ -1,5 +1,6 @@
 package com.mihai.licenta.Models.DBModels;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -38,7 +39,7 @@ public class Book {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
     private Set<Recommendations> recommendations;
 
-    @JsonManagedReference
+    @JsonBackReference
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "book", orphanRemoval = true)
     private Set<BookState> bookStates;
 

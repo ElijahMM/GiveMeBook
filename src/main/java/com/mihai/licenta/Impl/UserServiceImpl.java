@@ -1,9 +1,8 @@
 package com.mihai.licenta.Impl;
 
-import com.mihai.licenta.Models.DBModels.Book;
-import com.mihai.licenta.Models.DBModels.UserPreferences;
-import com.mihai.licenta.Models.DBModels.Settings;
-import com.mihai.licenta.Models.DBModels.User;
+import com.mihai.licenta.Models.DBModels.*;
+import com.mihai.licenta.Models.InternModels.InteractionIncoming;
+import com.mihai.licenta.Models.InternModels.SharedUser;
 import com.mihai.licenta.Repos.UserRepository;
 import com.mihai.licenta.Service.UserService;
 import com.mihai.licenta.Utils.Urls;
@@ -173,6 +172,41 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
+    @Override
+    public SharedUser getUserById(Long uid) {
+        User user = findUserById(uid);
+        if (user != null) {
+            SharedUser sharedUser = new SharedUser();
+            sharedUser.setUsername(user.getUsername());
+            sharedUser.setPhotoUrl(user.getPhotoUrl());
+            sharedUser.setBookStates(user.getBookStates());
+            sharedUser.setInteractions(user.getInteractions());
+            sharedUser.setFbID(user.getFbID());
+            return sharedUser;
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean addFriendToUser(InteractionIncoming interactionIncoming) {
+        User user = userRepository.findOne(interactionIncoming.getMyID());
+        if (user != null) {
+            if (userRepository.findOne(interactionIncoming.getFriendID()) != null) {
+                if (!user.getInteractions().stream().filter(o -> o.getiId().equals(interactionIncoming.getFriendID())).findFirst().isPresent()) {
+                    Interactions interactions = new Interactions();
+                    interactions.setRefId(interactionIncoming.getFriendID());
+                    interactions.setUser(user);
+                    interactions.setType(interactionIncoming.getType());
+                    user.getInteractions().add(interactions);
+                    saveUser(user, 1);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public int setUpUserPhotoUrl(String url, Long userId) {
