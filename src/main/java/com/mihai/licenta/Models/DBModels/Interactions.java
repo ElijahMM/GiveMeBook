@@ -17,11 +17,16 @@ public class Interactions {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long iId;
 
+    /**
+     * 1 - friend request
+     * 2 - friend accepted
+     * 3 - follow
+     */
     @Column
     private Integer type;
 
     @Column
-    private Integer refId;
+    private Long refId;
 
 
     @JsonBackReference
@@ -46,11 +51,11 @@ public class Interactions {
         this.type = type;
     }
 
-    public Integer getRefId() {
+    public Long getRefId() {
         return refId;
     }
 
-    public void setRefId(Integer refId) {
+    public void setRefId(Long refId) {
         this.refId = refId;
     }
 

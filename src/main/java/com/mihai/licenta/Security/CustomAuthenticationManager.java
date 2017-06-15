@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 /**
  * Created by mihai on 04.04.2017.
@@ -28,6 +29,7 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         String password = authentication.getCredentials().toString();
 
         User user = userService.loginUser(email, password);
+        user.setInteractions(user.getInteractions().stream().filter((o -> o.getType().equals(2))).collect(Collectors.toSet()));
 
         if (user == null) {
             throw new BadCredentialsException("Invalid email or password");
